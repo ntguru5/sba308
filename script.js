@@ -78,6 +78,12 @@
 
     function getLearnerData(course, ag, submissions) {
     // here, we would process this data to achieve the desired result.
+    // If assignmentGroup.course_id is not equal to course.id, throw an error
+    // Create an empty map or object to store data for each learner
+    // for each submission in submissions get leaner_id, assignment_id, submission details
+    // find assignment in assignmentGroup.assignments list that matches assignment_id
+    // if assignment due_at is in the future, skip
+    // If assignment.points_possible is 0, throw an error
     const result = [
         {
         id: 125,
