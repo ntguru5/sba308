@@ -78,39 +78,6 @@
 
     function getLearnerData(course, ag, submissions) {
     // here, we would process this data to achieve the desired result.
-    // If assignmentGroup.course_id is not equal to course.id, throw an error
-    // Create an empty map or object to store data for each learner
-    // for each submission in submissions get leaner_id, assignment_id, submission details
-    // find assignment in assignmentGroup.assignments list that matches assignment_id
-    // if assignment due_at is in the future, skip
-    // If assignment.points_possible is 0, throw an error
-    // Compare submissionDetails.submitted_at date with the assignment.due_at date, if submission is late, subtract 10% from points_possible
-    // Calculate percentageScore as submissionDetails.score / assignment.points_possible
-    // Update Learner data: id, total points, total possible, % of score
-    // Calculate averages
-    // return results
-
-    try {
-        // check course_id in assignmentGroup matches courseInfo
-        if (ag.course_id !== course_id) {
-            throw new Error("Assignment group doesn't belong to the course.");
-        }
-    }
-
-    const learnerDataResults = {};
-        submissions.forEach(submission => {
-            const {learner_id, assignment_id, submission: subDetails } = submission;
-
-            // find the assignment in AssignmentGroup
-            const assignment = ag.assignments.find(assn => assn.id === assignment_id);
-
-            if (new Date(assignment.due_at) > new Date()) {
-                return;
-            }
-        })
-
-
-
     const result = [
         {
         id: 125,
