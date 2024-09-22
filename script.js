@@ -100,13 +100,33 @@
     const learnerDataResults = {};
         submissions.forEach(submission => {
             const {learner_id, assignment_id, submission: subDetails } = submission;
-
             // find the assignment in AssignmentGroup
             const assignment = ag.assignments.find(assn => assn.id === assignment_id);
 
+            // skip future assignments
             if (new Date(assignment.due_at) > new Date()) {
                 return;
             }
+
+            // make sure points_possible is greater than zero
+            if (assignment.points_possible === 0) {
+                throw new Error(`Assignment ${assignment_id} has points_possible of 0.`);
+            }
+
+            // check if learner submission is late, deduct 10%
+            let score = subDetails.score;
+            const submittedAt = new Date(subDetails.submitted_at);
+            const dueAt = new Date(assignment.due_at);
+            if (submittedAt > dueAt) {
+                score = assignment.points_possible * 0.1;
+            }
+
+        return(result);
+        catch (error) {
+            console.error(error.message);
+
+        }
+
         })
 
 
