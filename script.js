@@ -92,7 +92,7 @@
 
     try {
         // check course_id in assignmentGroup matches courseInfo
-        if (ag.course_id !== course_id) {
+        if (ag.course_id !== course.id) {
             throw new Error("Assignment group doesn't belong to the course.");
         }
     }
@@ -135,6 +135,8 @@
                     description: `Learner ${learner_id} performance for ${course.name}`,
                 };
             }
+
+            // add learner score to results
 
         })
 
