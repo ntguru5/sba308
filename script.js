@@ -137,8 +137,10 @@
             }
 
             // add learner score to results
-
-        })
+            learnerDataResults[learner_id][assignment_id] = percentageScore;
+            learnerDataResults[learner_id].totalPoints += score;
+            learnerDataResults[learner_id].totalPossible += assignment.points_possible;
+        });
 
 
 
