@@ -96,7 +96,9 @@
             throw new Error("Assignment group doesn't belong to the course.");
         }
     }
-
+    catch (error) {
+        console.error(error.message);
+    }
     const learnerDataResults = {};
         submissions.forEach(submission => {
             const {learner_id, assignment_id, submission: subDetails } = submission;
@@ -121,11 +123,18 @@
                 score = assignment.points_possible * 0.1;
             }
 
-        return(result);
-        catch (error) {
-            console.error(error.message);
+            // calculate percentage scored for assignment
+            const percentageScore = score / assignment.points_possible;
 
-        }
+            // if learner doesn't exist, create an entry
+            if (!learnerDataResults[learner_id]) {
+                learnerDataResults[learner_id] = {
+                    id: learner_id,
+                    totalPoints: 0,
+                    totalPossible: 0,
+                    description: `Learner ${learner_id} performance for ${course.name}`,
+                };
+            }
 
         })
 
