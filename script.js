@@ -105,10 +105,8 @@
             if (new Date(subDetails.submitted_at) > new Date(assignment.due_at)) {
                 console.log(`Assignment ${assignment_id} for Learner ${learner_id} submitted late, 10% deducted`);
                 score = score - 0.1 * assignment.points_possible;
-                console.log(score);
             } else {
                 console.log(`Submission is on time for learner ${learner_id} for assignment ${assignment_id}.`);
-                console.log(score);
             }
 
             // calculate percentage scored for assignment
