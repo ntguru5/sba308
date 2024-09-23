@@ -95,10 +95,7 @@
         if (ag.course_id !== course.id) {
             throw new Error("Assignment group doesn't belong to the course.");
         }
-    }
-    catch (error) {
-        console.error(error.message);
-    }
+
     const learnerDataResults = {};
         submissions.forEach(submission => {
             const {learner_id, assignment_id, submission: subDetails } = submission;
@@ -142,25 +139,39 @@
             learnerDataResults[learner_id].totalPossible += assignment.points_possible;
         });
 
-
-
-    const result = [
-        {
-        id: 125,
-        avg: 0.985, // (47 + 150) / (50 + 150)
-        1: 0.94, // 47 / 50
-        2: 1.0 // 150 / 150
-        },
-        {
-        id: 132,
-        avg: 0.82, // (39 + 125) / (50 + 150)
-        1: 0.78, // 39 / 50
-        2: 0.833 // late: (140 - 15) / 150
-        }
-    ];
+        // calculate average scores for each learner and return results
+        const result = Object.values(learnerDataResults).map(learner => {
+            const avg = learner.totalPoints / learner.totalPossible;
+            return {
+                ...learner,
+                avg,
+                summary: `Learner ${learner.id} has an average score of ${(avg * 100).toFixed(2)}% on their assignments.`
+            };
+        });
 
     return result;
+    } catch (error) {
+        console.error(error.message);
     }
+}
+
+    // const result = [
+    //     {
+    //     id: 125,
+    //     avg: 0.985, // (47 + 150) / (50 + 150)
+    //     1: 0.94, // 47 / 50
+    //     2: 1.0 // 150 / 150
+    //     },
+    //     {
+    //     id: 132,
+    //     avg: 0.82, // (39 + 125) / (50 + 150)
+    //     1: 0.78, // 39 / 50
+    //     2: 0.833 // late: (140 - 15) / 150
+    //     }
+    // ];
+
+    // return result;
+    // }
 
     const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
 
