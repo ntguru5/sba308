@@ -76,6 +76,19 @@
     },
     ];
 
+// Helper function to check if submission is late and apply penalty
+// function checkLateSubmission(submissionDate, dueDate, pointsPossible) {
+//     if (new Date(submissionDate) > new Date(dueDate)) {
+//         console.log("Submission is late. Applying 10% penalty.");
+//         return pointsPossible * 0.1;  // Deduct 10%
+//     }
+//     return 0;  // No penalty
+// }
+// Helper function to calculate percentage score
+function calculatePercentage(score, pointsPossible) {
+    return score / pointsPossible;
+}
+
     function getLearnerData(course, ag, submissions) {
 
     try {
@@ -101,16 +114,20 @@
             }
 
             // check if learner submission is late, deduct 10%
+            // let score = subDetails.score;
+            // score -= checkLateSubmission(subDetails.submitted_at, assignment.due_at, assignment.points_possible);
             let score = subDetails.score;
             if (new Date(subDetails.submitted_at) > new Date(assignment.due_at)) {
                 console.log(`Assignment ${assignment_id} for Learner ${learner_id} submitted late, 10% deducted`);
                 score = score - 0.1 * assignment.points_possible;
+
             } else {
                 console.log(`Submission is on time for learner ${learner_id} for assignment ${assignment_id}.`);
             }
 
             // calculate percentage scored for assignment
-            const percentageScore = score / assignment.points_possible;
+            // const percentageScore = score / assignment.points_possible;
+            const percentageScore = calculatePercentage(score, assignment.points_possible);
 
             // if learner doesn't exist, create an entry
             if (!learnerDataResults[learner_id]) {
