@@ -76,18 +76,22 @@
     },
     ];
 
-// Helper function to check if submission is late and apply penalty
-// function checkLateSubmission(submissionDate, dueDate, pointsPossible) {
-//     if (new Date(submissionDate) > new Date(dueDate)) {
-//         console.log("Submission is late. Applying 10% penalty.");
-//         return pointsPossible * 0.1;  // Deduct 10%
-//     }
-//     return 0;  // No penalty
-// }
-// Helper function to calculate percentage score
-function calculatePercentage(score, pointsPossible) {
-    return score / pointsPossible;
-}
+    // Helper function to calculate percentage score
+    function calculatePercentage(score, pointsPossible) {
+        return score / pointsPossible;
+    }
+
+    // Helper function to initialize learner in the results
+    function initializeLearner(learnerDataResults, learnerId, courseName) {
+        if (!learnerDataResults[learnerId]) {
+            learnerDataResults[learnerId] = {
+                id: learnerId,
+                totalPoints: 0,
+                totalPossible: 0,
+                description: `Learner ${learnerId} performance for ${courseName}`,
+            };
+        }
+    }
 
     function getLearnerData(course, ag, submissions) {
 
@@ -126,18 +130,10 @@ function calculatePercentage(score, pointsPossible) {
             }
 
             // calculate percentage scored for assignment
-            // const percentageScore = score / assignment.points_possible;
             const percentageScore = calculatePercentage(score, assignment.points_possible);
 
             // if learner doesn't exist, create an entry
-            if (!learnerDataResults[learner_id]) {
-                learnerDataResults[learner_id] = {
-                    id: learner_id,
-                    totalPoints: 0,
-                    totalPossible: 0,
-                    description: `Learner ${learner_id} performance for ${course.name}`,
-                };
-            }
+            initializeLearner(learnerDataResults, learner_id, course.name);
 
             // add learner score to results
             learnerDataResults[learner_id][assignment_id] = percentageScore;
@@ -161,6 +157,6 @@ function calculatePercentage(score, pointsPossible) {
     }
 }
 
-const results = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
+    const results = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
 
-console.log(results);
+    console.log(results);
