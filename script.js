@@ -114,11 +114,19 @@
 
             // check if learner submission is late, deduct 10%
             let score = subDetails.score;
-            const submittedAt = new Date(subDetails.submitted_at);
-            const dueAt = new Date(assignment.due_at);
-            if (submittedAt > dueAt) {
-                score = assignment.points_possible * 0.1;
+            if (new Date(subDetails.submitted_at) > new Date(assignment.due_at)) {
+                console.log(`Assignment ${assignment_id} for Learner ${learner_id} submitted late, 10% deducted`);
+                score = score - 0.1 * assignment.points_possible;
+            } else {
+                console.log(`Submission is on time for learner ${learner_id} for assignment ${assignment_id}.`);
             }
+
+            // const submittedAt = new Date(subDetails.submitted_at);
+            // console.log(submittedAt)
+            // const dueAt = new Date(assignment.due_at);
+            // if (submittedAt > dueAt) {
+            //     score = assignment.points_possible * 0.1;
+            // } console.log(score)   //(`Assignment ${assignment_id} for Learner ${learner_id} submitted late, 10% deducted`);
 
             // calculate percentage scored for assignment
             const percentageScore = score / assignment.points_possible;
@@ -137,7 +145,7 @@
             learnerDataResults[learner_id][assignment_id] = percentageScore;
             learnerDataResults[learner_id].totalPoints += score;
             learnerDataResults[learner_id].totalPossible += assignment.points_possible;
-        });
+        }); console.log(learnerDataResults);
 
         // calculate average scores for each learner and return results
         const result = Object.values(learnerDataResults).map(learner => {
