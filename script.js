@@ -76,9 +76,9 @@
     },
     ];
 
-    // Helper function to calculate percentage score
-    function calculatePercentage(score, pointsPossible) {
-        return score / pointsPossible;
+    // Helper function to find assignment by ID
+    function findAssignmentById(assignments, assignmentId) {
+        return assignments.find(assn => assn.id === assignmentId);
     }
 
     // Helper function to initialize learner in the results
@@ -93,16 +93,22 @@
         }
     }
 
-// Helper function to check if submission is late and apply penalty
-function checkLateSubmission(learner_id, assignment_id, submissionDate, dueDate, pointsPossible) {
-    if (new Date(submissionDate) > new Date(dueDate)) {
-        console.log(`Assignment ${assignment_id} for Learner ${learner_id} submitted late. Applying 10% penalty.`);
-        return pointsPossible * 0.1;  // Deduct 10%
+    // Helper function to check if submission is late and apply penalty
+    function checkLateSubmission(learner_id, assignment_id, submissionDate, dueDate, pointsPossible) {
+        if (new Date(submissionDate) > new Date(dueDate)) {
+            console.log(`Assignment ${assignment_id} for Learner ${learner_id} submitted late. Applying 10% penalty.`);
+            return pointsPossible * 0.1;  // Deduct 10%
+        }
+        console.log(`Assignment ${assignment_id} for Learner ${learner_id} was submitted on time.`);
+        return 0;  // No penalty
     }
-    console.log(`Assignment ${assignment_id} for Learner ${learner_id} was submitted on time.`);
-    return 0;  // No penalty
-}
 
+    // Helper function to calculate percentage score
+    function calculatePercentage(score, pointsPossible) {
+        return score / pointsPossible;
+    }
+
+    // *** this is the main function we're working off of for this exercise
     function getLearnerData(course, ag, submissions) {
 
     try {
@@ -115,7 +121,7 @@ function checkLateSubmission(learner_id, assignment_id, submissionDate, dueDate,
         submissions.forEach(submission => {
             const {learner_id, assignment_id, submission: subDetails } = submission;
             // find the assignment in AssignmentGroup
-            const assignment = ag.assignments.find(assn => assn.id === assignment_id);
+            const assignment = findAssignmentById(ag.assignments, assignment_id);
 
             // skip future assignments
             if (new Date(assignment.due_at) > new Date()) {
