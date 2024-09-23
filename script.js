@@ -73,22 +73,10 @@
         submitted_at: "2023-03-07",
         score: 140
         }
-    }
+    },
     ];
 
     function getLearnerData(course, ag, submissions) {
-    // here, we would process this data to achieve the desired result.
-    // If assignmentGroup.course_id is not equal to course.id, throw an error
-    // Create an empty map or object to store data for each learner
-    // for each submission in submissions get leaner_id, assignment_id, submission details
-    // find assignment in assignmentGroup.assignments list that matches assignment_id
-    // if assignment due_at is in the future, skip
-    // If assignment.points_possible is 0, throw an error
-    // Compare submissionDetails.submitted_at date with the assignment.due_at date, if submission is late, subtract 10% from points_possible
-    // Calculate percentageScore as submissionDetails.score / assignment.points_possible
-    // Update Learner data: id, total points, total possible, % of score
-    // Calculate averages
-    // return results
 
     try {
         // check course_id in assignmentGroup matches courseInfo
@@ -117,16 +105,11 @@
             if (new Date(subDetails.submitted_at) > new Date(assignment.due_at)) {
                 console.log(`Assignment ${assignment_id} for Learner ${learner_id} submitted late, 10% deducted`);
                 score = score - 0.1 * assignment.points_possible;
+                console.log(score);
             } else {
                 console.log(`Submission is on time for learner ${learner_id} for assignment ${assignment_id}.`);
+                console.log(score);
             }
-
-            // const submittedAt = new Date(subDetails.submitted_at);
-            // console.log(submittedAt)
-            // const dueAt = new Date(assignment.due_at);
-            // if (submittedAt > dueAt) {
-            //     score = assignment.points_possible * 0.1;
-            // } console.log(score)   //(`Assignment ${assignment_id} for Learner ${learner_id} submitted late, 10% deducted`);
 
             // calculate percentage scored for assignment
             const percentageScore = score / assignment.points_possible;
@@ -154,8 +137,8 @@
                 ...learner,
                 avg,
                 summary: `Learner ${learner.id} has an average score of ${(avg * 100).toFixed(2)}% on their assignments.`
-            };
-        });
+                };
+        });console.log(result);
 
     return result;
     } catch (error) {
@@ -163,24 +146,6 @@
     }
 }
 
-    // const result = [
-    //     {
-    //     id: 125,
-    //     avg: 0.985, // (47 + 150) / (50 + 150)
-    //     1: 0.94, // 47 / 50
-    //     2: 1.0 // 150 / 150
-    //     },
-    //     {
-    //     id: 132,
-    //     avg: 0.82, // (39 + 125) / (50 + 150)
-    //     1: 0.78, // 39 / 50
-    //     2: 0.833 // late: (140 - 15) / 150
-    //     }
-    // ];
+const results = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
 
-    // return result;
-    // }
-
-    const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
-
-    console.log(result);
+console.log(results);
