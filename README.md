@@ -14,5 +14,6 @@ This application processes learner submission data for a given course, calculati
 3. Error handling will output issues such as invalid course IDs or zero points possible.
 
 ## Sample Usage:
-`const result = getLearnerData(CourseInfo, AssignmentGroups, LearnerSubmissions);
-console.log(result);`
+`const result = getLearnerData(CourseInfo, AssignmentGroups, LearnerSubmissions);`
+
+`console.log(result);`
